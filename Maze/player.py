@@ -74,7 +74,6 @@ class Player(RawTurtle):
             if cell["start"]:
                 self.current_start = (x, y)
                 break
-        print(self.current_start)
         new_x = self.current_start[0] - self.maze.width * self.screen_obj.size /2
         new_y = self.current_start[1] - self.maze.height * self.screen_obj.size /2
         self.goto(new_x + self.maze.screen.size, new_y + self.maze.screen.size)

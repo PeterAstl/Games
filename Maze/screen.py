@@ -24,8 +24,8 @@ class Screen:
         self.start = [1,1]
 
     def paint(self, maze, height, width):
-        offset_x = -width * self.size /2
-        offset_y = -height * self.size /2
+        offset_x = round(-width * self.size /2)
+        offset_y = round(-height * self.size /2)
         for y in range(height):
             for x in range(width):
                 if maze[x, y]["wall"]:
