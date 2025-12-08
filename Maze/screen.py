@@ -74,5 +74,3 @@ class Screen:
 
     def start_position(self):
         return self.start
-
-

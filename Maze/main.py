@@ -1,8 +1,7 @@
 
-from player import *
 from mazebrain import *
 
-maze = Maze(height=11, width=11)
+maze = Maze(height=13, width=13)
 
 maze.mix()
 maze.draw()

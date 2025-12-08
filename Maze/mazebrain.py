@@ -1,4 +1,4 @@
-import random
+
 from screen import *
 
 class Maze:
@@ -57,4 +57,3 @@ class Maze:
         self.width = random.randrange(11, 31, 2)
         self.mix()
         self.draw()
-

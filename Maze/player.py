@@ -126,7 +126,6 @@ class Player(RawTurtle):
         #ITEMS
         if self.maze.maze.get(next_cell)["item"]:
             self.maze.maze[next_cell]["item"] = False
-            print("item")
             items = (self.damage,self.heal,self.sword)
             action = random.choice(items)
             action()
