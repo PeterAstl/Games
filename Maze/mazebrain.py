@@ -17,6 +17,8 @@ class Maze:
                     "visited": False,
                     "start" : False,
                     "end": False,
+                    "enemy": False,
+                    "item": False,
         }
         ex = self.width -3
         ey = self.height -3
