@@ -36,7 +36,7 @@ class Gui:
         self.text_log_text.configure(text=text)
 
     def game_over(self):
-        self.game_over_text = tk.Label(self.screen.root, text="☠️GAME OVER☠️", font=("Consolas", 80), bg="grey", fg="white")
+        self.game_over_text = tk.Label(self.screen.root, text="☠GAME OVER☠", font=("Consolas", 80), bg="grey", fg="white")
         self.game_over_text.place(anchor="center", x=self.screen.width / 2, y=self.screen.height / 2)
         with open("highscore.txt", "w") as file:
             file.write("Highscore: " + str(self.highscore))
