@@ -53,7 +53,7 @@ class Maze:
     def maze_clear(self):
         self.maze = {}
         self.screen.pen.clear()
-        self.height = random.randrange(11, 25, 2)
+        self.height = random.randrange(11, 21, 2)
         self.width = random.randrange(11, 25, 2)
         self.mix()
         self.draw()
