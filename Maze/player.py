@@ -1,7 +1,8 @@
 
 from turtle import RawTurtle
 import random
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
+import os
 
 class Player(RawTurtle):
     def __init__(self, screen_obj, maze, position, gui):
@@ -9,11 +10,14 @@ class Player(RawTurtle):
         self.penup()
         self.maze = maze
         self.screen_obj = screen_obj
-        img = Image.open("Son_Goku.png")
-        img = img.resize((self.screen_obj.size, self.screen_obj.size))
-        img.save("Son_Goku.gif")
-        self.screen_obj.screen.addshape("Son_Goku.gif")
-        self.shape("Son_Goku.gif")
+        if os.path.exists("Son_Goku.png"):
+            img = Image.open("Son_Goku.png")
+            img = img.resize((self.screen_obj.size, self.screen_obj.size))
+            img.save("Son_Goku.gif")
+            self.screen_obj.screen.addshape("Son_Goku.gif")
+            self.shape("Son_Goku.gif")
+        else:
+            self.shape("Square")
         self.shapesize(self.screen_obj.size/20)
         self.hideturtle()
         self.goto(position)

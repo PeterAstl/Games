@@ -28,10 +28,13 @@ class Screen:
         self.start = [1,1]
         self.bg_image = ""
         self.image()
-        img = Image.open("Relaxo.png")
-        img = img.resize((self.size, self.size))
-        img.save("Relaxo.gif")
-        self.screen.addshape("Relaxo.gif")
+        if os.path.exists("Son_Goku.png"):
+            img = Image.open("Relaxo.png")
+            img = img.resize((self.size, self.size))
+            img.save("Relaxo.gif")
+            self.screen.addshape("Relaxo.gif")
+            self.exist = True
+
 
     def paint(self, maze, height, width):
         offset_x = round(-width * self.size /2)
@@ -59,9 +62,13 @@ class Screen:
                         random_enemy_amount = random.randint(1,20)
                         if random_enemy_amount == 1:
                             self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                            self.pen.shape("Relaxo.gif")
-                            self.pen.stamp()
-                            self.pen.shape("square")
+                            if self.exist:
+                                self.pen.shape("Relaxo.gif")
+                                self.pen.stamp()
+                                self.pen.shape("square")
+                            else:
+                                self.pen.color("red")
+                                self.pen.stamp()
                             maze[x, y]["enemy"] = True
                     if not maze[x, y]["wall"] and not maze[x, y]["end"] and not maze[x, y]["start"] and not maze[x, y]["enemy"]:
                         random_item_amount = random.randint(1, 20)

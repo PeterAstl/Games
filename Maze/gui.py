@@ -14,6 +14,13 @@ class Gui:
         self.xp_text = tk.Label(self.screen.root, text="XP: 0/10", font=("Arial", 20), bg="lightblue", fg="white")
         self.xp_text.place(anchor="center", x=self.screen.width - 100, y=50)
         self.game_over_text = False
+        self.highscore = 0
+        with open("highscore.txt", "a") as file:
+            file.write("")
+        with open("highscore.txt", "r") as file:
+            highscore_file_text = file.read()
+        self.highscore_text = tk.Label(self.screen.root, text=highscore_file_text, font=("Arial", 20), bg="lightblue", fg="white")
+        self.highscore_text.place(anchor="center", x= self.screen.width/2, y = 100)
 
 
     def hp_change(self, current_hp, max_hp, amount):
@@ -21,6 +28,7 @@ class Gui:
 
     def level(self, level):
         self.level_text.configure(text=f"Level {level}")
+        self.highscore = level
 
     def text_log(self, text):
         self.text_log_text.configure(text=text)
@@ -28,6 +36,8 @@ class Gui:
     def game_over(self):
         self.game_over_text = tk.Label(self.screen.root, text="☠️GAME OVER☠️", font=("Arial", 80), bg="grey", fg="white")
         self.game_over_text.place(anchor="center", x=self.screen.width / 2, y=self.screen.height / 2)
+        with open("highscore.txt", "w") as file:
+            file.write("Highscore: " + str(self.highscore))
 
     def xp(self, xp,xp_for_level_up):
         self.xp_text.configure(text=f"XP: {xp}/{xp_for_level_up}")
