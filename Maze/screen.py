@@ -52,6 +52,14 @@ class Screen:
             self.chest_exists = True
         else:
             self.chest_exists = False
+        if os.path.exists("pictures/loch.jpg"):
+            img = Image.open("pictures/loch.jpg")
+            img = img.resize((self.size, self.size))
+            img.save("pictures/loch.gif")
+            self.screen.addshape("pictures/loch.gif")
+            self.loch_exists = True
+        else:
+            self.loch_exists = False
 
 
     def paint(self, maze, height, width):
@@ -69,17 +77,16 @@ class Screen:
                         self.pen.color("grey")
                         self.pen.stamp()
                 if maze[x, y]["start"]:
-                    self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                    self.pen.color("green")
-                    self.pen.stamp()
-                    self.pen.color("grey")
                     self.start = [x * self.size + offset_x, y * self.size + offset_y]
 
                 if maze[x, y]["end"]:
                     self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                    self.pen.color("blue")
-                    self.pen.stamp()
-                    self.pen.color("grey")
+                    if self.loch_exists:
+                        self.pen.shape("pictures/loch.gif")
+                        self.pen.stamp()
+                    else:
+                        self.pen.color("blue")
+                        self.pen.stamp()
 
                 else:
                     if not maze[x, y]["wall"] and not maze[x, y]["end"] and not maze[x, y]["start"]:
@@ -89,7 +96,6 @@ class Screen:
                             if self.enemy_exists:
                                 self.pen.shape("pictures/Relaxo.gif")
                                 maze[x,y]["id"] = self.pen.stamp()
-                                self.pen.shape("square")
                             else:
                                 self.pen.color("red")
                                 self.pen.stamp()
@@ -101,7 +107,6 @@ class Screen:
                             if self.chest_exists:
                                 self.pen.shape("pictures/chest.gif")
                                 maze[x,y]["id"] = self.pen.stamp()
-                                self.pen.shape("square")
                             else:
                                 self.pen.color("lightgreen")
                                 self.pen.stamp()
