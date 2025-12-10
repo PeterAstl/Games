@@ -4,6 +4,7 @@ import random
 from PIL import Image
 import os
 from sounds import Sounds
+import sys
 
 
 class Player(RawTurtle):
@@ -76,6 +77,10 @@ class Player(RawTurtle):
         self.screen.onkeypress(lambda: self.make_movement("left"), "a")
         self.screen.onkeypress(lambda: self.make_movement("right"), "d")
         self.screen.onkeypress(self.interact, "e")
+        self.screen.onkeypress(self.restart_program, "r")
+
+    def restart_program(self):
+        os.execl(sys.executable, sys.executable, *sys.argv)
 
     def reset_maze(self):
         self.sound.sound_track(f"sounds/level_finished.wav")
@@ -166,8 +171,8 @@ class Player(RawTurtle):
     def weapon_type(self):
         if self.weapon_level <= len(self.weapons) - 1:
             while True:
-                random_upgrade = random.randint(1,max(2*self.weapon_level, 1))
-                if random_upgrade == 1:
+                random_upgrade = random.randint(0,1+self.weapon_level)
+                if random_upgrade == 0:
                     self.weapon_level = min(self.weapon_level, len(self.weapons) - 1)
                     items_list = list(self.weapons.items())
                     key, value = items_list[self.weapon_level]

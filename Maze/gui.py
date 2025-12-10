@@ -20,8 +20,8 @@ class Gui:
         with open("highscore.txt", "a") as file:
             file.write("")
         with open("highscore.txt", "r") as file:
-            highscore_file_text = file.read()
-        self.highscore_text = tk.Label(self.screen.root, text=highscore_file_text, font=("Consolas", 20), bg="#E0C453", fg="white", bd= 2, relief= "groove")
+            self.highscore_file_text = file.read()
+        self.highscore_text = tk.Label(self.screen.root, text=self.highscore_file_text, font=("Consolas", 20), bg="#E0C453", fg="white", bd= 2, relief= "groove")
         self.highscore_text.place(anchor="center", x= self.screen.width/2, y = 100)
 
 
@@ -39,7 +39,8 @@ class Gui:
         self.game_over_text = tk.Label(self.screen.root, text="☠GAME OVER☠", font=("Consolas", 80), bg="grey", fg="white", bd= 2, relief= "groove")
         self.game_over_text.place(anchor="center", x=self.screen.width / 2, y=self.screen.height / 2)
         with open("highscore.txt", "w") as file:
-            file.write("Highscore: " + str(self.highscore))
+            if self.highscore > int(self.highscore_file_text):
+                file.write("Highscore: " + str(self.highscore))
 
     def xp(self, xp,xp_for_level_up):
         self.xp_text.configure(text=f"XP: {xp}/{xp_for_level_up}")

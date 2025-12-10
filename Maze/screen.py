@@ -9,8 +9,8 @@ class Screen:
         self.root = tk.Tk()
         self.root.title("Maze")
         self.root.geometry("800x800")
-        self.width = 800
-        self.height = 800
+        self.width = 1900
+        self.height = 1000
 
         self.canvas = tk.Canvas(self.root, width=self.width, height=self.height)
         self.canvas.pack()
@@ -20,7 +20,7 @@ class Screen:
         self.pen = turtle.RawTurtle(self.screen)
         self.pen.penup()
         self.pen.hideturtle()
-        self.pen.speed(0)
+        self.pen.speed("fastest")
         self.size = 25
         self.pen.color("grey")
         self.pen.shape("square")
@@ -28,38 +28,16 @@ class Screen:
         self.start = [1,1]
         self.bg_image = ""
         self.image()
-        if os.path.exists("pictures/Relaxo.png"):
-            img = Image.open("pictures/Relaxo.png")
-            img = img.resize((self.size, self.size))
-            img.save("pictures/Relaxo.gif")
-            self.screen.addshape("pictures/Relaxo.gif")
-            self.enemy_exists = True
-        else:
-            self.enemy_exists = False
-        if os.path.exists("pictures/sand.png"):
-            img = Image.open("pictures/sand.png")
-            img = img.resize((self.size, self.size))
-            img.save("pictures/sand.gif")
-            self.screen.addshape("pictures/sand.gif")
-            self.wall_exists = True
-        else:
-            self.wall_exists = False
-        if os.path.exists("pictures/chest.jpg"):
-            img = Image.open("pictures/chest.jpg")
-            img = img.resize((self.size, self.size))
-            img.save("pictures/chest.gif")
-            self.screen.addshape("pictures/chest.gif")
-            self.chest_exists = True
-        else:
-            self.chest_exists = False
-        if os.path.exists("pictures/loch.jpg"):
-            img = Image.open("pictures/loch.jpg")
-            img = img.resize((self.size, self.size))
-            img.save("pictures/loch.gif")
-            self.screen.addshape("pictures/loch.gif")
-            self.loch_exists = True
-        else:
-            self.loch_exists = False
+        pic_list = ("relaxo", "sand", "chest", "loch")
+        self.icons = []
+
+        for picture in pic_list:
+            if os.path.exists(f"pictures/{picture}.png"):
+                img = Image.open(f"pictures/{picture}.png")
+                img = img.resize((self.size, self.size))
+                img.save(f"pictures/{picture}.gif")
+                self.screen.addshape(f"pictures/{picture}.gif")
+                self.icons.append(picture)
 
 
     def paint(self, maze, height, width):
@@ -69,19 +47,19 @@ class Screen:
             for x in range(width):
                 if maze[x, y]["wall"]:
                     self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                    if self.wall_exists:
+                    if "sand" in self.icons:
                         self.pen.shape("pictures/sand.gif")
                         self.pen.stamp()
                         self.pen.shape("square")
                     else:
                         self.pen.color("grey")
                         self.pen.stamp()
-                if maze[x, y]["start"]:
+                elif maze[x, y]["start"]:
                     self.start = [x * self.size + offset_x, y * self.size + offset_y]
 
-                if maze[x, y]["end"]:
+                elif maze[x, y]["end"]:
                     self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                    if self.loch_exists:
+                    if "loch" in self.icons:
                         self.pen.shape("pictures/loch.gif")
                         self.pen.stamp()
                     else:
@@ -93,18 +71,18 @@ class Screen:
                         random_enemy_amount = random.randint(1,20)
                         if random_enemy_amount == 1:
                             self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                            if self.enemy_exists:
-                                self.pen.shape("pictures/Relaxo.gif")
+                            if "relaxo" in self.icons:
+                                self.pen.shape("pictures/relaxo.gif")
                                 maze[x,y]["id"] = self.pen.stamp()
                             else:
                                 self.pen.color("red")
                                 self.pen.stamp()
                             maze[x, y]["enemy"] = True
                     if not maze[x, y]["wall"] and not maze[x, y]["end"] and not maze[x, y]["start"] and not maze[x, y]["enemy"]:
-                        random_item_amount = random.randint(1, 20)
+                        random_item_amount = random.randint(1, 15)
                         if random_item_amount == 1:
                             self.pen.goto(x * self.size + offset_x, y * self.size + offset_y)
-                            if self.chest_exists:
+                            if "chest" in self.icons:
                                 self.pen.shape("pictures/chest.gif")
                                 maze[x,y]["id"] = self.pen.stamp()
                             else:
